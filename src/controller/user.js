@@ -35,7 +35,7 @@ export const userAdd = async (req, res) => {
     sendWelcomEmail(user.email, user.name);
     const token = await user.generateAuthToken();
     await user.save();
-    successRes(res, { user, token }, messages.Created);
+    successRes(res, { user, token },statusCode.Created, messages.Created);
   } catch (error) {
     console.error(error);
     errorRes(res, statusCode.Internal_Server_Error, messages.Server_Error);
@@ -68,7 +68,7 @@ export const userLogin = async (req, res) => {
 
     const token = await user.generateAuthToken();
 
-    successRes(res, { user, token }, messages.Ok);
+    successRes(res, { user, token },statusCode.Ok, messages.Ok);
   } catch (error) {
     console.error(error);
     errorRes(res, statusCode.Internal_Server_Error, messages.Server_Error);
@@ -103,7 +103,7 @@ export const allUsersList = async (req, res) => {
   try {
     const users = await User.find();
 
-    successRes(res, { users }, messages.Ok);
+    successRes(res,  users ,statusCode.Ok, messages.Ok);
   } catch (error) {
     console.error(error);
     errorRes(res, statusCode.Internal_Server_Error, messages.Server_Error);
@@ -121,7 +121,7 @@ export const userById = async (req, res) => {
         messages.notFound(constant.user)
       );
     }
-    successRes(res, user, messages.Ok);
+    successRes(res, user,statusCode.Ok, messages.Ok);
   } catch (error) {
     console.error(error);
     errorRes(res, statusCode.Internal_Server_Error, messages.Server_Error);
@@ -153,7 +153,7 @@ export const userUpdate = async (req, res) => {
 
     await user.save();
 
-    successRes(res, user, messages.Ok);
+    successRes(res, user,statusCode.Ok, messages.Ok);
   } catch (error) {
     console.error(error);
     errorRes(res, statusCode.Internal_Server_Error, messages.Server_Error);
@@ -172,7 +172,7 @@ export const userDelete = async (req, res) => {
       );
     }
 
-    successRes(res, user, messages.Ok);
+    successRes(res, user,statusCode.Ok, messages.Ok);
   } catch (error) {
     console.error(error);
     errorRes(res, statusCode.Internal_Server_Error, messages.Server_Error);
@@ -215,7 +215,7 @@ export const uploadAvatar = async (req, res) => {
 
     user.avatar = buffer;
     await user.save();
-    successRes(res, user, messages.Ok);
+    successRes(res, user,statusCode.Ok, messages.Ok);
   } catch (error) {
     console.log(error);
     errorRes(res, statusCode.Internal_Server_Error, messages.Server_Error);
@@ -235,7 +235,7 @@ export const deleteAvatar = async (req, res) => {
     }
     user.avatar = undefined;
     await user.save();
-    successRes(res, user, messages.Ok);
+    successRes(res, user,statusCode.Ok, messages.Ok);
   } catch (error) {
     console.log(error);
     errorRes(res, statusCode.Internal_Server_Error, messages.Server_Error);
@@ -254,7 +254,7 @@ export const getUserAvatar = async (req, res) => {
       );
     }
     res.set('Content-Type', 'image/jpeg');
-    successRes(res, user.avatar, messages.Ok);
+    successRes(res, user.avatar,statusCode.Ok, messages.Ok);
   } catch (error) {
     console.error(error);
     errorRes(res, statusCode.Internal_Server_Error, messages.Server_Error);
